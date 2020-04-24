@@ -22,7 +22,7 @@ class CreateTableOrder extends Migration
             $table->timestamps();
             $table->dateTime('closed_at')->nullable();
             $table->dateTime('viewed_at')->nullable();
-            $table->boolean('working');
+            $table->boolean('working')->default(false);
             $table->foreign('user_id')
                 ->references('id')->on('users')
                 ->onDelete('cascade');
