@@ -17,4 +17,8 @@ class PublicViewsController extends Controller
         $orders = Order::where('user_id',auth()->user()->id)->get();
         return view('orderList',['orders' => $orders]);
     }
+    public function viewOrder($id) {
+        $order = Order::where('id',$id)->first();
+        return view('viewOrder',['order' => $order]);
+    }
 }

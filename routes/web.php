@@ -20,6 +20,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/order', 'PublicViewsController@order')->name('order');
     Route::post('/order', 'OrderController@saveOrder')->name('orderSave');
     Route::get('/orderList', 'PublicViewsController@orderList')->name('orderList');
+    Route::get('/viewOrder/{id}', 'PublicViewsController@viewOrder')->name('viewOrder');
 });
 
 Route::prefix('/manager')->middleware(['auth','check:view_manager_panel'])->group(function (){
