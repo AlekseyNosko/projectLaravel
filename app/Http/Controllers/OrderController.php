@@ -9,15 +9,17 @@ use Illuminate\Http\Request;
 class OrderController extends Controller
 {
     public function saveOrder(OrderRequest $request) {
-        if($request->hasFile('file')){
+        $data = [];
+        if($request->hasFile('file')) {
             $file = $request->file('file');
             $input['file'] = $file->getClientOriginalName();
-            $file->move(public_path().'/files/',$input['file']);
-            $data = [
+            $file->move(public_path() . '/files/', $input['file']);
+            $data += ['file' =>  $input['file']];
+        }
+            $data += [
                 'user_id' => auth()->user()->id,
                 'title' =>  $request['text'],
-                'text' =>  $request['text'],
-                'file' =>  $input['file']
+                'text' =>  $request['text']
             ];
             $order = new Order();
             $order->fill($data);
@@ -26,7 +28,5 @@ class OrderController extends Controller
             } else {
                 return redirect('order')->with('status','Ошибка !');
             }
-        }
-        dd(2);
     }
 }

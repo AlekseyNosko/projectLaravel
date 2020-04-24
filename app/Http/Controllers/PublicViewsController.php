@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
 use Illuminate\Http\Request;
 
 class PublicViewsController extends Controller
@@ -13,6 +14,7 @@ class PublicViewsController extends Controller
         return view('order');
     }
     public function orderList(){
-        return view('orderList');
+        $orders = Order::where('user_id',auth()->user()->id)->get();
+        return view('orderList',['orders' => $orders]);
     }
 }
