@@ -1,0 +1,15 @@
+.menu {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.title h5{
+    text-align: center;
+}
+
+.content {
+    width: 80%;
+    margin: 0 auto;
+    border-left: 1px solid rgb(240,240,240);
+    border-right: 1px solid rgb(240,240,240);
+}

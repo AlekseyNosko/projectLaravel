@@ -11,10 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', 'PublicViewsController@welcome')->name('welcome');
+    Route::get('/order', 'PublicViewsController@order')->name('order');
+    Route::post('/order', 'OrderController@saveOrder')->name('orderSave');
+    Route::get('/orderList', 'PublicViewsController@orderList')->name('orderList');
+});
+
+Route::prefix('/manager')->middleware(['auth','check:view_manager_panel'])->group(function (){
+
+});
