@@ -17,18 +17,18 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', 'PublicViewsController@welcome')->name('welcome');
-    Route::get('/order', 'PublicViewsController@order')->name('order');
-    Route::post('/order', 'OrderController@saveOrder')->name('orderSave');
-    Route::get('/orderList', 'PublicViewsController@orderList')->name('orderList');
-    Route::get('/viewOrder/{id}', 'PublicViewsController@viewOrder')->name('viewOrder');
-    Route::get('/closedOrder/{id}', 'OrderController@closedOrder')->name('closedOrder');
+    Route::get('/order', 'PublicViewsController@order')->name('order')->middleware('can:add_order');
+    Route::post('/order', 'OrderController@saveOrder')->name('orderSave')->middleware('can:add_order');
+    Route::get('/orderList', 'PublicViewsController@orderList')->name('orderList')->middleware('can:show_list_orders');
+    Route::get('/viewOrder/{id}', 'PublicViewsController@viewOrder')->name('viewOrder')->middleware('can:show_order');
+    Route::get('/closedOrder/{id}', 'OrderController@closedOrder')->name('closedOrder')->middleware('can:closed_order');
     Route::get('/about', 'PublicViewsController@about')->name('about');
 });
 
 Route::prefix('/manager')->middleware(['auth','can:view_manager_panel'])->group(function (){
     Route::get('/', 'ManagementController@panel')->name('panel');
-    Route::get('/allOrderList', 'ManagementController@allOrderList')->name('allOrderList');
-    Route::post('/getAllOrderList', 'ManagementController@getAllOrderList')->name('getAllOrderList');
-    Route::get('/managementOrder/{id}', 'ManagementController@managementOrder')->name('managementOrder');
-    Route::get('/addToWorkOrder/{id}', 'ManagementController@addToWorkOrder')->name('addToWorkOrder');
+    Route::get('/allOrderList', 'ManagementController@allOrderList')->name('allOrderList')->middleware('can:show_all_list_orders');
+    Route::post('/getAllOrderList', 'ManagementController@getAllOrderList')->name('getAllOrderList')->middleware('can:show_all_list_orders');
+    Route::get('/managementOrder/{id}', 'ManagementController@managementOrder')->name('managementOrder')->middleware('can:show_all_order');
+    Route::get('/addToWorkOrder/{id}', 'ManagementController@addToWorkOrder')->name('addToWorkOrder')->middleware('can:add_to_worked');
 });
