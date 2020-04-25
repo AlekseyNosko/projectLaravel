@@ -32,15 +32,24 @@
             <li class="nav-item @if (Route::currentRouteName() == 'welcome')active @endif">
                 <a class="nav-link" href="{{route('welcome')}}">Главная<span class="sr-only">(current)</span></a>
             </li>
+            @can('add_order')
                         <li class="nav-item @if (Route::currentRouteName() == 'order')active @endif">
                             <a class="nav-link" href="{{route('order')}}">Подать заявку</a>
                         </li>
+            @endcan
+            @can('show_list_orders')
                         <li class="nav-item @if (Route::currentRouteName() == 'orderList')active @endif">
                             <a class="nav-link" href="{{route('orderList')}}">Список Заявок </a>
                         </li>
-            {{--            <li class="nav-item @if (Route::currentRouteName() == 'trans')active @endif">--}}
-            {{--                <button class="btn btn-primary">Заказать перевозку</button>--}}
-            {{--            </li>--}}
+            @endcan
+            @can('view_manager_panel')
+                <li class="nav-item @if (Route::currentRouteName() == 'panel')active @endif">
+                    <a class="nav-link" href="{{route('panel')}}">Панель менеджера</a>
+                </li>
+            @endcan
+            <li class="nav-item @if (Route::currentRouteName() == 'about')active @endif">
+                <a class="nav-link" href="{{route('about')}}">О программе</a>
+            </li>
         </ul>
         <ul class="navbar-nav ml-auto">
         @guest

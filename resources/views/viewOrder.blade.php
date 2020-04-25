@@ -50,11 +50,32 @@
                     {{$order->file}}
                 </div>
             </div>
+            <div class="row">
+                <div class="offset-1 col-1">
+                    <label>Статус:</label>
+                </div>
+                <div class="col-9">
+                    @if ($order->closed_at != null) Закрытая @elseif ($order->working) Выполняется @elseif ($order->viewed_at != null) Просмотрена @else Не просмотрена @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="offset-1 col-1">
+                    <label>Дата заявки:</label>
+                </div>
+                <div class="col-2">
+                    {{$order->created_at}}
+                </div>
+            </div>
             <hr>
             <div class="row">
-                <div class="offset-2 col-2">
-                    <button type="submit" class="btn btn-warning">Закрыть заявку</button>
+                <div class="offset-1 col-1">
+                    <label>Действия:</label>
                 </div>
+                @can('closed_order')
+                    <div class=" col-2">
+                        <a href="{{route('closedOrder',$order->id)}}" class="btn btn-danger @if($order->closed_at) disabled @endif">Закрыть заявку</a>
+                    </div>
+                @endcan
             </div>
             <hr>
 {{--        </form>--}}

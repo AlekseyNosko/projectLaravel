@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderRequest;
 use App\Order;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -28,5 +29,12 @@ class OrderController extends Controller
             } else {
                 return redirect('order')->with('status','Ошибка !');
             }
+    }
+
+    public function closedOrder($id) {
+        $order = Order::where('id', $id)->first();
+        $order->fill(['closed_at' => Carbon::now()]);
+        $order->save();
+        return redirect()->back()->with('status','Заявка успешно закрыта!');
     }
 }
