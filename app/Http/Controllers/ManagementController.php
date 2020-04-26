@@ -31,8 +31,25 @@ class ManagementController extends Controller
         return redirect()->back()->with('status','Успешно добавлена в работу!');
     }
 
-    public function getAllOrderList(){
-
+    public function getAllOrderList(Request $request){
+        $orders = Order::with('orderUser');
+        if($request['filter_viewed'] == 'view'){
+            $orders->where('viewed_at','!=',null);
+        } elseif ( $request['filter_viewed'] == 'notView') {
+            $orders->where('viewed_at','=',null);
+        }
+        if($request['filter_closed'] == 'closed'){
+            $orders->where('closed_at','!=',null);
+        } elseif ( $request['filter_closed'] == 'notClosed') {
+            $orders->where('closed_at','=',null);
+        }
+        if($request['filter_working'] == 'work'){
+            $orders->where('working','=',true);
+        } elseif ( $request['filter_working'] == 'notWork') {
+            $orders->where('working','=',false);
+        }
+        $orders = $orders->orderBy('created_at','desc')->get()->toArray();
+        return response()->json($orders,200);
     }
 
 }

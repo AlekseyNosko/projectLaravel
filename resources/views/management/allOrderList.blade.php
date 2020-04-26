@@ -24,36 +24,39 @@
             </div>
         </div>
             <hr>
-            <div class="row">
-                <div class="offset-2 col-1" style="margin-top: 20px;"><h4>Фильтры</h4></div>
-                <div class="col-2">
-                    <label for="filter_closed">Просмотренные/Непросмотр.</label>
-                    <select name="filter_visible" id="filter_visible" class="form-control">
-                        <option value="all">Все</option>
-                        <option value="all">Просмотренные</option>
-                        <option value="all">Непросмотренные</option>
-                    </select>
+            <form id="filter_form" method="POST" action="{{route('orderSave')}}" enctype="multipart/form-data">
+                <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}">
+                <div class="row">
+                    <div class="offset-2 col-1" style="margin-top: 20px;"><h4>Фильтры</h4></div>
+                    <div class="col-2">
+                        <label for="filter_closed">Просмотренные/Непросмотр.</label>
+                        <select name="filter_viewed" id="filter_viewed" class="form-control">
+                            <option value="all">Все</option>
+                            <option value="view">Просмотренные</option>
+                            <option value="notView">Непросмотренные</option>
+                        </select>
+                    </div>
+                    <div class="col-2">
+                        <label for="filter_closed">Закрытые/незакрытые</label>
+                        <select name="filter_closed" id="filter_closed" class="form-control">
+                            <option value="all">Все</option>
+                            <option value="closed">Закрытые</option>
+                            <option value="notClosed">Незакрытые</option>
+                        </select>
+                    </div>
+                    <div class="col-2">
+                        <label for="filter_working">В работе/Не в работе</label>
+                        <select name="filter_working" id="filter_working" class="form-control">
+                            <option value="all">Все</option>
+                            <option value="work">В Работе</option>
+                            <option value="notWork">Не в работе</option>
+                        </select>
+                    </div>
+                    <div class="col-2" style="margin-top: 20px;">
+                        <button type="submit" class="btn btn-success" id="filter_list">Отфильтровать</button>
+                    </div>
                 </div>
-                <div class="col-2">
-                    <label for="filter_closed">Закрытые/незакрытые</label>
-                    <select name="filter_closed" id="filter_closed" class="form-control">
-                        <option value="all">Все</option>
-                        <option value="all">Закрытые</option>
-                        <option value="all">Незакрытые</option>
-                    </select>
-                </div>
-                <div class="col-2">
-                    <label for="filter_working">В работе/Не в работе</label>
-                    <select name="filter_working" id="filter_working" class="form-control">
-                        <option value="all">Все</option>
-                        <option value="all">В Работе</option>
-                        <option value="all">Не в работе</option>
-                    </select>
-                </div>
-                <div class="col-2" style="margin-top: 20px;">
-                    <button class="btn btn-success" id="filter_list">Отфильтровать</button>
-                </div>
-            </div>
+            </form>
             <hr>
         <table class="table table-hover table-striped">
             <thead>
@@ -67,7 +70,7 @@
             </thead>
             <tbody>
             @foreach ($orders as $k => $order)
-                <tr>
+                <tr class="list-order">
                     <td>{{ $k+1 }}</td>
                     <td><a href="{{route('managementOrder',$order->id)}}">{{ $order->title }}</a></td>
                     <td>{{ $order->orderUser->name }}</td>

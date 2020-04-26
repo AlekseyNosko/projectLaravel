@@ -28,7 +28,7 @@ Route::middleware(['auth'])->group(function () {
 Route::prefix('/manager')->middleware(['auth','can:view_manager_panel'])->group(function (){
     Route::get('/', 'ManagementController@panel')->name('panel');
     Route::get('/allOrderList', 'ManagementController@allOrderList')->name('allOrderList')->middleware('can:show_all_list_orders');
-    Route::post('/getAllOrderList', 'ManagementController@getAllOrderList')->name('getAllOrderList')->middleware('can:show_all_list_orders');
+    Route::post('/getOrderList', 'ManagementController@getAllOrderList')->name('getOrderList')->middleware('can:show_all_list_orders');
     Route::get('/managementOrder/{id}', 'ManagementController@managementOrder')->name('managementOrder')->middleware('can:show_all_order');
     Route::get('/addToWorkOrder/{id}', 'ManagementController@addToWorkOrder')->name('addToWorkOrder')->middleware('can:add_to_worked');
 });
