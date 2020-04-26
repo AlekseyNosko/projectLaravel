@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\OrderMessage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -19,9 +20,10 @@ class ManagementController extends Controller
 
     public function managementOrder($id){
         $order = Order::where('id', $id)->first();
+        $orderMessages = OrderMessage::where('order_id',$order['id'])->orderBy('created_at')->get();
         $order->fill(['viewed_at' => Carbon::now()]);
         $order->save();
-        return view('management.managementOrder',['order' => $order]);
+        return view('management.managementOrder',['order' => $order, 'orderMessages' => $orderMessages]);
     }
 
     public function addToWorkOrder($id) {

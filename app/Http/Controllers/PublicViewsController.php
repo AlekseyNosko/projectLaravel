@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\OrderMessage;
 use Illuminate\Http\Request;
 
 class PublicViewsController extends Controller
@@ -26,7 +27,8 @@ class PublicViewsController extends Controller
     public function viewOrder($id)
     {
         $order = Order::where('id', $id)->first();
-        return view('viewOrder', ['order' => $order]);
+        $orderMessages = OrderMessage::where('order_id',$order['id'])->orderBy('created_at')->get();
+        return view('viewOrder', ['order' => $order, 'orderMessages' => $orderMessages]);
     }
 
     public function about()

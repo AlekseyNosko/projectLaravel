@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderMessage extends Model
 {
-    protected $table = 'order';
+    protected $table = 'order_messages';
 
     protected $fillable = [
         'order_id', 'user_id','text'

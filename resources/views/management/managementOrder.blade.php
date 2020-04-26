@@ -17,8 +17,6 @@
                 {{ session('status') }}
             </div>
         @endif
-        {{--        <form method="POST" action="{{route('orderSave')}}" enctype="multipart/form-data">--}}
-        {{--            <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}">--}}
         <hr>
         <div class="row title">
             <div class="col-12">
@@ -39,7 +37,7 @@
                 <label for="text">Сообщение:</label>
             </div>
             <div class="col-9">
-                {{$order->text}}
+                <textarea name="text_order" id="text_order" cols="80" rows="8" readonly>{{$order->text}}</textarea>
             </div>
         </div>
         <div class="row">
@@ -89,6 +87,40 @@
             @endcan
         </div>
         <hr>
-        {{--        </form>--}}
+            <div class="row title">
+                <div class="col-12">
+                    <h5>Сообщения</h5>
+                </div>
+            </div>
+            @foreach($orderMessages as $message)
+                <div class="row">
+                    <div class="offset-1 col-10 alert alert-primary">
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="text">Сообщение от {{$message->messageUser->name}} | дата: {{$message->created_at}}</label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-12">
+                                <textarea name="text_mess" id="text_mess" cols="100" rows="2" readonly>{{$message->text}}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+            <hr>
+            <form method="POST" action="{{route('sendMessage')}}" enctype="multipart/form-data">
+                <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}">
+                <input type="hidden" name="order_id" id="order_id" value="{{$order->id}}">
+            <div class="row">
+                    <div class="offset-1 col-2">Отправить сообщение:</div>
+                    <div class="col-6"><textarea name="text" id="text" cols="100" rows="2"></textarea></div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </div>
+            </div>
+            </form>
+            <hr>
     </div>
 @endsection
