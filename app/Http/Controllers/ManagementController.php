@@ -6,6 +6,7 @@ use App\Order;
 use App\OrderMessage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ManagementController extends Controller
 {
@@ -30,6 +31,11 @@ class ManagementController extends Controller
         $order = Order::where('id', $id)->first();
         $order->fill(['working' => true]);
         $order->save();
+
+        Mail::send('mail',['order'=>$order],function ($message) use ($order){
+            $message->to($order->orderUser->email,$order->orderUser->name)->subject('order add to work');
+            $message->from(auth()->user()->email,auth()->user()->name);
+        });
         return redirect()->back()->with('status','Успешно добавлена в работу!');
     }
 

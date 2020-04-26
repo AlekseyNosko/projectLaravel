@@ -8,6 +8,7 @@ use App\Order;
 use App\OrderMessage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -27,6 +28,10 @@ class OrderController extends Controller
             $order = new Order();
             $order->fill($data);
             if($order->save()){
+                Mail::send('mail',['order'=>$order],function ($message){
+                    $message->to('manager@gmail.com','manager')->subject('send message');
+                    $message->from(auth()->user()->email,auth()->user()->name);
+                });
                 return redirect('orderList')->with('status','Заявка добавленна!');
             } else {
                 return redirect('order')->with('status','Ошибка !');
@@ -37,6 +42,10 @@ class OrderController extends Controller
         $order = Order::where('id', $id)->first();
         $order->fill(['closed_at' => Carbon::now()]);
         $order->save();
+        Mail::send('mail',['order'=>$order],function ($message){
+            $message->to('manager@gmail.com','manager')->subject('send message');
+            $message->from(auth()->user()->email,auth()->user()->name);
+        });
         return redirect()->back()->with('status','Заявка успешно закрыта!');
     }
 
@@ -46,9 +55,14 @@ class OrderController extends Controller
             'user_id' => auth()->user()->id,
             'text' => $request['text']
         ];
-        $order = new OrderMessage();
-        $order->fill($data);
-        if($order->save()){
+        $orderMessage = new OrderMessage();
+        $orderMessage->fill($data);
+        if($orderMessage->save()){
+            $order = Order::where('id',$request['order_id'])->first();
+            Mail::send('mail',['order'=>$order],function ($message){
+                $message->to('manager@gmail.com','manager')->subject('send message');
+                $message->from(auth()->user()->email,auth()->user()->name);
+            });
             return redirect()->back()->with('status','Сообщение отправлено!');
         } else {
             return redirect()->back()->with('status','Ошибка !');

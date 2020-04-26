@@ -23,7 +23,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/viewOrder/{id}', 'PublicViewsController@viewOrder')->name('viewOrder')->middleware('can:show_order');
     Route::get('/closedOrder/{id}', 'OrderController@closedOrder')->name('closedOrder')->middleware('can:closed_order');
     Route::get('/about', 'PublicViewsController@about')->name('about');
-    Route::post('/sendMessage', 'OrderController@sendMessage')->name('sendMessage');
 });
 
 Route::prefix('/manager')->middleware(['auth','can:view_manager_panel'])->group(function (){
