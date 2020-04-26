@@ -17,8 +17,8 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', 'PublicViewsController@welcome')->name('welcome');
-    Route::get('/order', 'PublicViewsController@order')->name('order')->middleware('can:add_order');
-    Route::post('/order', 'OrderController@saveOrder')->name('orderSave')->middleware('can:add_order');
+    Route::get('/order', 'PublicViewsController@order')->name('order')->middleware(['can:add_order','checkCountOrder']);
+    Route::post('/order', 'OrderController@saveOrder')->name('orderSave')->middleware('can:add_order','checkCountOrder');
     Route::get('/orderList', 'PublicViewsController@orderList')->name('orderList')->middleware('can:show_list_orders');
     Route::get('/viewOrder/{id}', 'PublicViewsController@viewOrder')->name('viewOrder')->middleware('can:show_order');
     Route::get('/closedOrder/{id}', 'OrderController@closedOrder')->name('closedOrder')->middleware('can:closed_order');

@@ -2,6 +2,21 @@
 
 @section('content')
     <div class="content" style="text-align: center;">
+        @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if (session('status'))
+            <div class="alert alert-danger">
+                {{ session('status') }}
+            </div>
+        @endif
         <div class="row">
             <div class="col-lg-12">Добро пожаловать {{auth()->user()->name}}</div>
         </div>
