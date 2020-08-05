@@ -47,5 +47,17 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'show_all_order',
             'desc' => 'show all order',
         ]);
+        DB::table('permissions')->insert([
+            'name' => 'add_user',
+            'desc' => 'add_user',
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'delete_user',
+            'desc' => 'delete_user',
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'edit_user',
+            'desc' => 'edit_user',
+        ]);
     }
 }

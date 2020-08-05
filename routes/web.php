@@ -33,3 +33,11 @@ Route::prefix('/manager')->middleware(['auth','can:view_manager_panel'])->group(
     Route::get('/managementOrder/{id}', 'ManagementController@managementOrder')->name('managementOrder')->middleware('can:show_all_order');
     Route::get('/addToWorkOrder/{id}', 'ManagementController@addToWorkOrder')->name('addToWorkOrder')->middleware('can:add_to_worked');
 });
+
+    Route::get('/admin', ['as'=> 'admin','uses' =>'ControlPanel@getUsers']);
+    Route::get('/edituser/{id}',['as'=>'editUser','uses'=>'ControlPanel@editUsers']);
+    Route::post('/savedituser',['as'=>'saveedituser','uses'=>'ControlPanel@saveEditUser']);
+    Route::get('/deluser/{id}',['as'=>'delUser','uses'=>'ControlPanel@delUser']);
+    Route::post('/adduser',['as'=>'addUser','uses'=>'ControlPanel@addUser']);
+    Route::resource('men','MenController');
+

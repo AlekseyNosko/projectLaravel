@@ -11,6 +11,14 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/editUser.js') }}" defer></script>
+    <script src="{{ asset('js/saveEditUser.js') }}" defer></script>
+    <script src="{{ asset('js/delUser.js') }}" defer></script>
+    <script src="{{ asset('js/addUser.js') }}" defer></script>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" >
+    <!-- Подключаем Bootstrap JS -->
+    <script src="js/bootstrap.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -49,6 +57,9 @@
             @endcan
             <li class="nav-item @if (Route::currentRouteName() == 'about')active @endif">
                 <a class="nav-link" href="{{route('about')}}">О программе</a>
+            </li>
+            <li class="nav-item @if (Route::currentRouteName() == 'admin')active @endif">
+                <a class="nav-link" href="{{route('admin')}}">Администрирования пользователей</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
