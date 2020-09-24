@@ -59,5 +59,9 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'edit_user',
             'desc' => 'edit_user',
         ]);
+        DB::table('permissions')->insert([
+            'name' => 'view_admin_panel',
+            'desc' => 'view_admin_panel',
+        ]);
     }
 }
