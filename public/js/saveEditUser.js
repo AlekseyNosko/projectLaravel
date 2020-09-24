@@ -5,19 +5,15 @@ jQuery(function ($) {
             'email': $('input[name="email"]').val(),
             'id': $('input[name="id"]').val(),
         }
-
         $.ajax({
             url: '/savedituser',
             type: 'post',
-
             data: $data,
             headers:
                 {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-
             success: function (response) {
-                // console.log(response);
              $('#edituser').modal('hide');
 
                 let appendTable =$('#'+response.id)
@@ -28,8 +24,6 @@ jQuery(function ($) {
             error: function (url) {
                 console.log("ERROR",url);
             },
-
         });
-
     })
 })

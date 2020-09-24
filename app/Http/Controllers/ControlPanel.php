@@ -7,17 +7,9 @@ use App\User;
 
 class ControlPanel extends Controller
 {
-    //
-//    public function index()
-//    {
-//
-//        return view('controlPanel');
-//    }
     public function getUsers()
     {
         $users = User::orderBY('name','desc')->get();
-
-
         return view('controlPanel', ['users' => $users]);
     }
     public function editUsers($id)
@@ -27,14 +19,11 @@ class ControlPanel extends Controller
     }
     public function saveEditUser(Request $request)
     {
-
         $users = User::find(intval($request['id']));
         $data = [
-
             'name' =>  $request['login'],
             'email' =>  $request['email']
         ];
-
         $users->fill($data);
         $users->save();
         return response()->json($users);
@@ -42,24 +31,19 @@ class ControlPanel extends Controller
 
     public function delUser($id)
     {
-//        dd($id);
         $users = User::find($id);
         $users->delete();
-//        dd($users);
     }
     public function addUser(Request $request)
     {
         $users = new User();
         $data = [
-
-            'name'     =>  $request['login'],
-            'email'    =>  $request['email'],
+            'name'     => $request['login'],
+            'email'    => $request['email'],
             'password' => $request['password']
         ];
-
         $users->fill($data);
         $users->save();
         return response()->json($users);
-
     }
 }
