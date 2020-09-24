@@ -37,6 +37,11 @@
             <li class="nav-item @if (Route::currentRouteName() == 'welcome')active @endif">
                 <a class="nav-link" href="{{route('welcome')}}">Главная<span class="sr-only">(current)</span></a>
             </li>
+            @can('view_admin_panel')
+                <li class="nav-item @if (Route::currentRouteName() == 'admin')active @endif">
+                    <a class="nav-link" href="{{route('admin')}}">Панель администратора</a>
+                </li>
+            @endcan
             @can('add_order')
                         <li class="nav-item @if (Route::currentRouteName() == 'order')active @endif">
                             <a class="nav-link" href="{{route('order')}}">Подать заявку</a>
@@ -54,9 +59,6 @@
             @endcan
             <li class="nav-item @if (Route::currentRouteName() == 'about')active @endif">
                 <a class="nav-link" href="{{route('about')}}">О программе</a>
-            </li>
-            <li class="nav-item @if (Route::currentRouteName() == 'admin')active @endif">
-                <a class="nav-link" href="{{route('admin')}}">Администрирования пользователей</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
