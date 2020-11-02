@@ -21,7 +21,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-       // dd(Gate::check('view_manager_panel'));
         return view('home');
     }
 
